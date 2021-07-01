@@ -1,9 +1,13 @@
-const routes = router => {
-    router.post("/quote/send_quote", multer(upload).single('pdf'), sendQuote);
-};
+const express = require('express');
+const router = express.Router();
+const QuoteController = require('./Modules/Quotes/Quote.controller');
 
-export default routes;
+router.post('/send_quote', send_mail);
 
-function sendQuote () {
-    console.log("Data");
+module.exports = router;
+
+function send_mail (req, res, next) {
+    QuoteController.sendQuote(req.body)
+    .then(data => data ? res.json(data) : res.sendStatus(404))
+    .catch(err => next(err));
 }

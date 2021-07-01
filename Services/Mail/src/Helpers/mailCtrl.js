@@ -1,3 +1,4 @@
+require('dotenv').config()
 import nodemailer   from "nodemailer";
 import fs           from "fs";
 import handlebars   from "handlebars";

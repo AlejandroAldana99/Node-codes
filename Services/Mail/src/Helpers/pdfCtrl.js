@@ -8,18 +8,19 @@ class InvoiceGenerator {
 
     generateHeaders(doc) {
         const billingAddress = this.invoice.addresses.billing
+        const imgPath = __dirname + "/../Assets/logo_sf.png";
 
         doc
-            .image('./../Assets/logo_sf.png', 0, 0, { width: 250})
+            .image(imgPath, 40, 40, {fit: [100,100]})
             .fillColor('#000')
             .fontSize(20)
-            .text('INVOICE', 275, 50, {align: 'right'})
+            .text('Lion 10', 275, 50, {align: 'right'})
             .fontSize(10)
             .text(`Invoice Number: ${this.invoice.invoiceNumber}`, {align: 'right'})
-            .text(`Due: ${this.invoice.dueDate}`, {align: 'right'})
+            .text(`Date: ${this.invoice.dueDate}`, {align: 'right'})
             .text(`Balance Due: $${this.invoice.subtotal - this.invoice.paid}`, {align: 'right'})
             .moveDown()
-            .text(`Billing Address:\n ${billingAddress.name}\n${billingAddress.address}\n${billingAddress.city}\n${billingAddress.state},${billingAddress.country}, ${billingAddress.postalCode}`, {align: 'right'})
+            .text(`Address:\n ${billingAddress.name}\n${billingAddress.address}\n${billingAddress.city}\n${billingAddress.state}, ${billingAddress.country}, ${billingAddress.postalCode}`, {align: 'right'})
     
         const beginningOfPage = 50
         const endOfPage = 550
@@ -70,8 +71,13 @@ class InvoiceGenerator {
     }
 
     generateFooter(doc) {
-        doc
-            .fontSize(10)
+        const beginningOfPage = 50
+        const endOfPage = 550
+
+        doc.moveTo(beginningOfPage,690)
+            .lineTo(endOfPage,690)
+            .stroke()
+        doc.fontSize(10)
             .text(`Payment due upon receipt. `, 50, 700, {
                 align: 'center'
             })
@@ -79,8 +85,7 @@ class InvoiceGenerator {
 
     generate() {
         let theOutput = new PDFGenerator 
-        console.log(this.invoice)
-        const fileName = `Invoice ${this.invoice.invoiceNumber}.pdf`
+        const fileName = `Invoice_${this.invoice.invoiceNumber}.pdf`
         // pipe to a writable stream which would save the result into the same directory
         theOutput.pipe(fs.createWriteStream(fileName))
         this.generateHeaders(theOutput)
