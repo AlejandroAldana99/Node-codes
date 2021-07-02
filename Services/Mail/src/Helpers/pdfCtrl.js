@@ -18,7 +18,7 @@ class InvoiceGenerator {
             .fontSize(10)
             .text(`Invoice Number: ${this.invoice.invoiceNumber}`, {align: 'right'})
             .text(`Date: ${this.invoice.dueDate}`, {align: 'right'})
-            .text(`Balance Due: $${this.invoice.subtotal - this.invoice.paid}`, {align: 'right'})
+            .text(`Balance: $${this.invoice.subtotal - this.invoice.paid}`, {align: 'right'})
             .moveDown()
             .text(`Address:\n ${billingAddress.name}\n${billingAddress.address}\n${billingAddress.city}\n${billingAddress.state}, ${billingAddress.country}, ${billingAddress.postalCode}`, {align: 'right'})
     
