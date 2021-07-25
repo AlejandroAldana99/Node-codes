@@ -105,3 +105,6 @@ dist
 
 # Package
 package-lock.json
+
+# Custom
+quotes/*.pdf

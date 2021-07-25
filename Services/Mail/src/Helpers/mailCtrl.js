@@ -1,17 +1,8 @@
-require('dotenv').config()
-import nodemailer   from "nodemailer";
-import fs           from "fs";
-import handlebars   from "handlebars";
-
-async function createTrasporter() {
-    let transporter = nodemailer.createTransport({
-        service: process.env.SERVICE,
-        host: process.env.HOST_MAIL,
-        port: process.env.PORT_MAIL
-    });
-
-    return transporter;
-}
+const fs = require('fs')
+const path = require('path')
+const nodemailer = require('nodemailer');
+const handlebars = require('handlebars');
+const quoteFile = 'src/Assets/email/quoteMail.html';
 
 let readHTMLFile = function (path, callback) {
     fs.readFile(path, { encoding: 'utf-8' }, function (err, html) {
@@ -25,76 +16,74 @@ let readHTMLFile = function (path, callback) {
     });
 };
 
-// email sender function
-const sendEmail = async (toEmail, content, type) => {
+async function send_email(data, quote_id) {
     try {
-        // Definimos el transporter
-        let teme;
-        let filePath;
-        let replacements;
-        let transporter = await createTrasporter();
-        // let transporter = nodemailer.createTransport({
-        //     service: process.env.SERVICE,
-        //     host: 'smtp.gmail.com',
-        //     port: 465,
-        //     auth: {
-        //         user: process.env.USER,
-        //         pass: process.env.PASS
-        //     }
-        // });
+        // confirmation data
+        const client_time_zone = data.clientTimeZone;
+        const email = data.email
 
-        switch (type) {
-            case "Recuperar":
-                filePath = 'src/Mail/recoverEmail.html';
-                teme = 'Recupera tu contraseña';
-                replacements = {
-                    name: content.name,
-                    cname: process.env.APP_NAME,
-                    mail: process.env.USER,
-                    url: 'http://localhost:3000/password-change?token=' + content.token
-                }
-                break;
-            case "Invitar":
-                filePath = 'src/Mail/inviteEmail.html';
-                teme = 'Haz sido invitado';
-                replacements = {
-                    cname: process.env.APP_NAME,
-                    name: content.name,
-                    password: content.password,
-                    url: 'http://localhost:3000/login?email=' + content.email
-                };
-                break;
-            case "Enviar":
-                filePath = 'src/Mail/sendEmail.html';
-                teme = content.asunto;
-                content.cname = process.env.APP_NAME;
-                replacements = content;
-                break;
-            default:
-                break;
+        // utc to local time
+        options = {
+            timeZone: client_time_zone, // you can test with "America/New_York"
+            dateStyle: 'full',
+            timeStyle: 'full'
+        };
+
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            host: "smtp.example.com", // Add your smtp mail
+            port: 465, // Add your port
+            secure: true, // true for 465, false for other ports 
+            auth: {
+                user: 'example@mail.com', // Add your generated email user 
+                pass: 'password-123' // Add your generated email password 
+            },
+            dkim: {
+                domainName: "domain.com", // Add your domain
+                keySelector: "key", // Add your key
+                privateKey: "" // If your have a private key, add here
+            },
+            tls: {
+                rejectUnauthorized: false // TLS config
+            }
+        });
+
+        let replacements = {
+            quoteID: quote_id,
+            body: '', // Email body
         }
 
         // Read HTML file and edit
-        readHTMLFile(filePath, function (err, html) {
+        readHTMLFile(quoteFile, async function (err, html) {
             let template = handlebars.compile(html);
             let htmlToSend = template(replacements);
             let mailOptions = {
-                from: '"Ventatec" <noreplay@ventatec.com>',
-                to: toEmail,
-                subject: teme,
+                from: 'Example Team <example@mail.com>',
+                to: email,
+                subject: "", // Email subject
                 html: htmlToSend,
+                attachments: [{
+                    filename: `Quote_${quote_id}.pdf`,
+                    path: path.resolve(__dirname, `./../../quotes/Quote_${quote_id}.pdf`), // `quotes/Quote_${quote_id}.pdf`,
+                    contentType: 'application/pdf'
+                },
+                {
+                    filename: 'logo_sf.png',
+                    path: 'src/Assets/images/logo_sf.png',
+                    cid: 'imagename' 
+                }]
             };
             // Enviamos el email
             transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                }
+                if (error) console.log(error);
             });
         });
-    }
-    catch (err) {
-        Console.log(err);
+
+        return { status: 200, message: `Message sent: Quote ID ${quote_id}` }
+    } 
+    catch (e) {
+        throw e; // we are catching this in the controller
     }
 }
 
-export default sendEmail;
+module.exports = send_email;
