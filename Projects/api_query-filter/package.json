@@ -1,0 +1,38 @@
+{
+  "name": "node-query-filter",
+  "version": "1.0.0",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev:build": "webpack --mode=development",
+    "start": "yarn run dev:build && concurrently \"webpack --mode=development -w\" \"nodemon dist/server.js\"",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlejandroAldana99/node-query-filter.git"
+  },
+  "keywords": [],
+  "author": "Alejandro Aldana",
+  "bugs": {
+    "url": "https://github.com/AlejandroAldana99/node-query-filter/issues"
+  },
+  "homepage": "https://github.com/AlejandroAldana99/node-query-filter",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.2",
+    "nodemon-webpack-plugin": "^4.4.4",
+    "request": "^2.88.2",
+    "yarn": "^1.22.17"
+  },
+  "devDependencies": {
+    "concurrently": "^6.4.0",
+    "dotenv-webpack": "^6.0.0",
+    "nodemon": "^2.0.7",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^2.5.2"
+  }
+}

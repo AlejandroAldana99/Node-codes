@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: Test 
+  version: '1.0'
+  contact:
+    name: 
+  description: Test ingreso 
+servers:
+  - url: 'test-'
+paths:
+  /entities/filter:
+    parameters: []
+    post:
+      summary: Filtrar listado entidades ordenadas alfabeticamente
+      tags: [Entity filter]
+      requestBody:
+        description: Datos de entrada
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Filter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Entity'
+        '400':
+          description: Error en validación datos de entrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error no se encuentra para rango especificado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      description: Gets entities By name
+components:
+  schemas:
+    Entity:
+      title: entity
+      type: object
+      properties:
+        entityId:
+          type: integer
+        name:
+          type: string
+        identificationNumber:
+          type: string
+        expirationDate:
+          type: string
+        contactName:
+          type: string
+        contactEmail:
+          type: string
+        logo:
+          type: string
+        required:
+          - name
+          - expirationDate
+          - identificationNumber
+          - contactName
+          - contactEmail
+    Filter:
+      type: object
+      properties:
+        startId:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 20
+          example: 2
+        endId:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 20
+          example: 10
+    Error:
+      type: object
+      properties:
+        Error:
+          type: string
+          example: 'Error en validación datos de entrada'
