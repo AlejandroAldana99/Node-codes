@@ -1,5 +1,4 @@
 # API INVESTMENTS
-GBM Software Engineer Challenge
 
 <br>
 
