@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "ff1334f3-5edf-470f-9c21-560542dbf8d9",
+		"name": "FIFO Code Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14151799"
+	},
+	"item": [
+		{
+			"name": "Post Allocate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"salesOrders\": [\r\n    { \"id\": \"S1\", \"created\": \"2020-01-02\", \"quantity\": 6 },\r\n    { \"id\": \"S2\", \"created\": \"2020-11-05\", \"quantity\": 2 },\r\n    { \"id\": \"S3\", \"created\": \"2019-12-04\", \"quantity\": 3 },\r\n    { \"id\": \"S4\", \"created\": \"2020-01-20\", \"quantity\": 2 },\r\n    { \"id\": \"S5\", \"created\": \"2019-12-15\", \"quantity\": 9 }\r\n  ],\r\n  \"purchaseOrders\": [\r\n    { \"id\": \"P1\", \"receiving\": \"2020-01-04\", \"quantity\": 4 },\r\n    { \"id\": \"P2\", \"receiving\": \"2020-01-05\", \"quantity\": 3 },\r\n    { \"id\": \"P3\", \"receiving\": \"2020-02-01\", \"quantity\": 5 },\r\n    { \"id\": \"P4\", \"receiving\": \"2020-03-05\", \"quantity\": 1 },\r\n    { \"id\": \"P5\", \"receiving\": \"2020-02-20\", \"quantity\": 7 }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/allocate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"allocate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Allocate",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"salesOrders\": [\r\n    { \"id\": \"S1\", \"created\": \"2020-01-02\", \"quantity\": 6 },\r\n    { \"id\": \"S2\", \"created\": \"2020-11-05\", \"quantity\": 2 },\r\n    { \"id\": \"S3\", \"created\": \"2019-12-04\", \"quantity\": 3 },\r\n    { \"id\": \"S4\", \"created\": \"2020-01-20\", \"quantity\": 2 },\r\n    { \"id\": \"S5\", \"created\": \"2019-12-15\", \"quantity\": 9 }\r\n  ],\r\n  \"purchaseOrders\": [\r\n    { \"id\": \"P1\", \"receiving\": \"2020-01-04\", \"quantity\": 4 },\r\n    { \"id\": \"P2\", \"receiving\": \"2020-01-05\", \"quantity\": 3 },\r\n    { \"id\": \"P3\", \"receiving\": \"2020-02-01\", \"quantity\": 5 },\r\n    { \"id\": \"P4\", \"receiving\": \"2020-03-05\", \"quantity\": 1 },\r\n    { \"id\": \"P5\", \"receiving\": \"2020-02-20\", \"quantity\": 7 }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/allocate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"allocate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "161"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"a1-Ac6Xhyp+SXugnR5Od1IyQ8sGFKM\""
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 21 Jul 2023 23:45:31 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"S1\",\n        \"date\": \"2020-01-05\"\n    },\n    {\n        \"id\": \"S2\",\n        \"date\": \"2020-11-05\"\n    },\n    {\n        \"id\": \"S3\",\n        \"date\": \"2020-01-04\"\n    },\n    {\n        \"id\": \"S4\",\n        \"date\": \"2020-01-20\"\n    },\n    {\n        \"id\": \"S5\",\n        \"date\": \"2020-02-01\"\n    }\n]"
+				}
+			]
+		}
+	]
+}
